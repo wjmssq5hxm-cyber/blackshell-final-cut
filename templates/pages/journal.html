@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Journal | {{ site.company_name }}{% endblock %}
+{% block description %}{{ site.journal_intro }}{% endblock %}
+{% block og_title %}Journal | {{ site.company_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+  <div class="flex items-center gap-3 mb-12">
+    <span class="text-frost text-xs tracking-[0.3em] font-bold">{{ site.journal_eyebrow }}</span>
+    <div class="flex-1 h-px bg-hair"></div>
+  </div>
+
+  <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-[0.95] text-white mb-6">
+    {{ site.journal_headline }}
+  </h1>
+  <p class="text-lg text-gray-400 max-w-2xl mb-16">
+    {{ site.journal_intro }}
+  </p>
+
+  <div class="space-y-px">
+    {% for post in posts %}
+      <a href="{{ post.get_absolute_url }}"
+         class="group grid grid-cols-1 md:grid-cols-12 gap-8 py-10 border-t border-hair hover:border-frost/30 transition-colors">
+        <div class="md:col-span-4">
+          <div class="aspect-[16/10] bg-card border border-hair rounded-xl overflow-hidden">
+            {% if post.cover_image %}
+              <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+            {% else %}
+              <div class="w-full h-full flex items-center justify-center bg-grid">
+                {% include "partials/nautilus_icon.html" with size=40 %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="md:col-span-8 flex flex-col justify-center">
+          {% if post.published_at %}
+            <div class="text-[10px] tracking-[0.25em] font-mono text-frost mb-3">{{ post.published_at|date:"Y.m.d" }}</div>
+          {% endif %}
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white group-hover:text-frost transition-colors mb-3">
+            {{ post.title }}
+          </h2>
+          {% if post.excerpt %}
+            <p class="text-sm text-gray-400 max-w-xl">{{ post.excerpt }}</p>
+          {% endif %}
+        </div>
+      </a>
+    {% empty %}
+      <p class="text-gray-500 py-8 border-t border-hair">No posts yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

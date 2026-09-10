@@ -1,0 +1,20 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+<div class="editor-welcome">
+  <h2>Black Shell Editor</h2>
+  <p>
+    This is the simple control panel for the website. Click a section below.
+    Change a field, hit <strong>Save</strong>, and the public site updates.
+  </p>
+  <ul>
+    <li><strong>Site text</strong> — headlines, phone, email, about copy, everything written.</li>
+    <li><strong>Home page cards / Services / Jobs</strong> — the repeating lists.</li>
+    <li><strong>Projects</strong> — add a job with a photo. Extra photos go in the gallery on that project.</li>
+    <li><strong>Journal posts</strong> — optional news. Unpublished posts stay hidden.</li>
+    <li><strong>Contact form inquiries</strong> — messages visitors send. They also email you.</li>
+  </ul>
+  <p class="editor-hint">Tip: one bullet per line in the bullet-list boxes. Leave a photo empty and a placeholder is used.</p>
+</div>
+{{ block.super }}
+{% endblock %}

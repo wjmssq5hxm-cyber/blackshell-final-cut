@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Projects | {{ site.company_name }}{% endblock %}
+{% block description %}{{ site.projects_intro }}{% endblock %}
+{% block og_title %}Projects | {{ site.company_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+  <div class="flex items-center gap-3 mb-12">
+    <span class="text-frost text-xs tracking-[0.3em] font-bold">{{ site.projects_eyebrow }}</span>
+    <div class="flex-1 h-px bg-hair"></div>
+  </div>
+
+  <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-[0.95] text-white mb-6">
+    {{ site.projects_headline }}
+  </h1>
+  <p class="text-lg text-gray-400 max-w-2xl mb-16">
+    {{ site.projects_intro }}
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {% for project in projects %}
+      <a href="{{ project.get_absolute_url }}"
+         class="group border border-hair hover:border-frost/40 rounded-2xl overflow-hidden bg-surface transition-colors">
+        <div class="relative aspect-[16/10] bg-card overflow-hidden">
+          {% if project.cover_image %}
+            <img src="{{ project.cover_image.url }}" alt="{{ project.title }}"
+                 class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-500">
+          {% else %}
+            <div class="w-full h-full flex items-center justify-center bg-grid">
+              {% include "partials/nautilus_icon.html" with size=48 %}
+            </div>
+          {% endif %}
+          {% if project.scope %}
+            <span class="absolute top-4 left-4 text-[10px] tracking-[0.25em] font-mono text-frost bg-ink/80 px-3 py-1 rounded-full">
+              {{ project.scope }}
+            </span>
+          {% endif %}
+        </div>
+        <div class="p-6">
+          <div class="flex items-center justify-between gap-4 mb-3">
+            <span class="text-[10px] tracking-[0.25em] font-mono text-gray-500">{{ project.client }}</span>
+            <span class="text-[10px] tracking-[0.25em] font-mono text-gray-600">{{ project.year }}</span>
+          </div>
+          <h2 class="text-2xl font-black tracking-tight text-white group-hover:text-frost transition-colors mb-3">
+            {{ project.title }}
+          </h2>
+          <p class="text-sm text-gray-400 leading-relaxed">{{ project.blurb }}</p>
+        </div>
+      </a>
+    {% empty %}
+      <p class="text-gray-500 col-span-2">Projects will appear here once they are added in the editor.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

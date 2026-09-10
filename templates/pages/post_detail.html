@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} | {{ site.company_name }}{% endblock %}
+{% block description %}{{ post.excerpt|default:post.title }}{% endblock %}
+{% block og_title %}{{ post.title }} | {{ site.company_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-[900px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+  <a href="{% url 'journal' %}" class="text-[11px] tracking-[0.25em] font-mono text-frost hover:text-frost-bright">
+    ← JOURNAL
+  </a>
+
+  <div class="mt-8 mb-10">
+    {% if post.published_at %}
+      <div class="text-[10px] tracking-[0.25em] font-mono text-frost mb-4">{{ post.published_at|date:"Y.m.d" }}</div>
+    {% endif %}
+    <h1 class="text-4xl md:text-5xl font-black tracking-tight leading-[0.95] text-white mb-6">
+      {{ post.title }}
+    </h1>
+    {% if post.excerpt %}
+      <p class="text-lg text-gray-400">{{ post.excerpt }}</p>
+    {% endif %}
+  </div>
+
+  {% if post.cover_image %}
+    <div class="aspect-[16/9] bg-card border border-hair rounded-2xl overflow-hidden mb-12">
+      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+    </div>
+  {% endif %}
+
+  <div class="text-gray-300 leading-relaxed space-y-4 mb-16">
+    {{ post.body|linebreaks }}
+  </div>
+
+  {% with photos=post.photos.all %}
+    {% if photos %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% for photo in photos %}
+          <figure class="border border-hair rounded-2xl overflow-hidden bg-card">
+            <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:post.title }}" class="w-full h-full object-cover">
+            {% if photo.caption %}
+              <figcaption class="px-4 py-3 text-xs text-gray-500 font-mono tracking-wider">{{ photo.caption }}</figcaption>
+            {% endif %}
+          </figure>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</div>
+{% endblock %}

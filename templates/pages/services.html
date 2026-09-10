@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Services | {{ site.company_name }}{% endblock %}
+{% block description %}{{ site.services_intro }}{% endblock %}
+{% block og_title %}Services | {{ site.company_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+  <div class="flex items-center gap-3 mb-12">
+    <span class="text-frost text-xs tracking-[0.3em] font-bold">{{ site.services_eyebrow }}</span>
+    <div class="flex-1 h-px bg-hair"></div>
+  </div>
+
+  <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-[0.95] text-white mb-6">
+    {{ site.services_headline }}
+  </h1>
+  <p class="text-lg text-gray-400 max-w-2xl mb-16">
+    {{ site.services_intro }}
+  </p>
+
+  <div class="space-y-12">
+    {% for svc in services %}
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-t border-hair pt-12">
+        <div class="md:col-span-3">
+          <span class="text-frost text-[11px] tracking-[0.3em] font-bold">
+            {{ forloop.counter|stringformat:"02d" }} / {{ svc.tag }}
+          </span>
+        </div>
+        <div class="md:col-span-9">
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mb-4">{{ svc.title }}</h2>
+          <p class="text-gray-400 mb-6 max-w-2xl">{{ svc.copy }}</p>
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl">
+            {% for bullet in svc.bullet_list %}
+              <li class="flex gap-2 text-sm text-gray-300">
+                <span class="text-frost">▸</span>
+                <span>{{ bullet }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-24 lg:mt-32">
+    <div class="flex items-center gap-3 mb-12">
+      <span class="text-frost text-xs tracking-[0.3em] font-bold">{{ site.tech_eyebrow }}</span>
+      <div class="flex-1 h-px bg-hair"></div>
+    </div>
+
+    <h2 class="text-4xl md:text-5xl font-black tracking-tight leading-[0.95] text-white mb-6">
+      {{ site.tech_headline }}
+    </h2>
+    <p class="text-lg text-gray-400 max-w-2xl mb-12">
+      {{ site.tech_intro }}
+    </p>
+
+    <div class="border-t border-hair pt-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
+        {% for item in tech_services %}
+          <div class="flex gap-2 text-sm text-gray-300">
+            <span class="text-frost mt-1">▸</span>
+            <span>{{ item.name }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

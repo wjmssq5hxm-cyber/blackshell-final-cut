@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@source "../templates";
+
+@theme {
+  --font-sans: "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-ink: #080b10;
+  --color-surface: #0c1017;
+  --color-card: #0f141c;
+  --color-hair: #1b2330;
+  --color-hair2: #2b3646;
+
+  --color-frost: #93b8ce;
+  --color-frost-bright: #c3dcea;
+  --color-frost-dim: #5b7c8d;
+
+  --color-bronze: #c08a4e;
+}
+
+html, body {
+  background: var(--color-ink);
+  color: #ffffff;
+  font-family: "Geist", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.3em;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 40s linear infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(147, 184, 206, 0.35)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 24px rgba(147, 184, 206, 0.6)); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes spiral-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.animate-spiral {
+  animation: spiral-rotate 120s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.animate-orbit {
+  animation: orbit 80s linear infinite;
+  transform-origin: 300px 300px;
+}
+
+@keyframes unspin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-unspin {
+  animation: unspin 80s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes glyph-float {
+  0%, 100% { transform: translateY(0); opacity: 0.88; }
+  50% { transform: translateY(-7px); opacity: 1; }
+}
+
+.glyph-float {
+  animation: glyph-float 5.5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes draw-arc {
+  to { stroke-dashoffset: 0; }
+}
+
+.logo-arc {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: draw-arc 3.2s ease-out forwards;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(147, 184, 206, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 184, 206, 0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Company logo is black-on-white; invert it for the dark site. */
+.logo-mark {
+  filter: invert(1) sepia(0.35) saturate(2.2) hue-rotate(175deg) brightness(1.15);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hair2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-frost-dim);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-frost);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-frost);
+  outline-offset: 2px;
+}
+
+a[href]:focus-visible,
+button:focus-visible {
+  box-shadow: 0 0 0 2px rgba(147, 184, 206, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-pulse-glow,
+  .animate-spiral,
+  .animate-orbit,
+  .animate-unspin,
+  .glyph-float,
+  .logo-arc {
+    animation: none !important;
+  }
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--color-frost) !important;
+  box-shadow: 0 0 0 3px rgba(147, 184, 206, 0.15);
+}

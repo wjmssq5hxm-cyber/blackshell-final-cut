@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} | {{ site.company_name }}{% endblock %}
+{% block description %}{{ project.blurb }}{% endblock %}
+{% block og_title %}{{ project.title }} | {{ site.company_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+  <a href="{% url 'projects' %}" class="text-[11px] tracking-[0.25em] font-mono text-frost hover:text-frost-bright">
+    ← ALL PROJECTS
+  </a>
+
+  <div class="mt-8 mb-10">
+    <div class="flex flex-wrap items-center gap-3 mb-4 text-[10px] tracking-[0.25em] font-mono text-gray-500">
+      <span>{{ project.client }}</span>
+      {% if project.year %}<span class="text-hair2">·</span><span>{{ project.year }}</span>{% endif %}
+      {% if project.scope %}<span class="text-hair2">·</span><span class="text-frost">{{ project.scope }}</span>{% endif %}
+    </div>
+    <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-[0.95] text-white mb-6">
+      {{ project.title }}
+    </h1>
+    <p class="text-lg text-gray-400 max-w-2xl">{{ project.blurb }}</p>
+  </div>
+
+  {% if project.cover_image %}
+    <div class="aspect-[16/8] bg-card border border-hair rounded-2xl overflow-hidden mb-12">
+      <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover">
+    </div>
+  {% endif %}
+
+  {% if project.body %}
+    <div class="max-w-2xl text-gray-300 leading-relaxed space-y-4 mb-16">
+      {{ project.body|linebreaks }}
+    </div>
+  {% endif %}
+
+  {% with photos=project.photos.all %}
+    {% if photos %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% for photo in photos %}
+          <figure class="border border-hair rounded-2xl overflow-hidden bg-card">
+            <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:project.title }}" class="w-full h-full object-cover">
+            {% if photo.caption %}
+              <figcaption class="px-4 py-3 text-xs text-gray-500 font-mono tracking-wider">{{ photo.caption }}</figcaption>
+            {% endif %}
+          </figure>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</div>
+{% endblock %}

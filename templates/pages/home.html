@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static spiral_tags %}
+
+{% block content %}
+<section class="relative bg-grid">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="relative aspect-square max-w-[600px] mx-auto w-full">
+        <div class="absolute inset-0 border border-hair"></div>
+        <div class="absolute top-0 left-0 w-8 h-8 border-l border-t border-frost/40"></div>
+        <div class="absolute top-0 right-0 w-8 h-8 border-r border-t border-frost/40"></div>
+        <div class="absolute bottom-0 left-0 w-8 h-8 border-l border-b border-frost/40"></div>
+        <div class="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-frost/40"></div>
+
+        {% include "partials/nautilus_spiral.html" %}
+
+        <div class="absolute bottom-4 left-4 right-4 text-[10px] text-frost/60 font-mono tracking-[0.2em]">
+          <div class="font-bold text-frost mb-1">{{ site.hero_caption_1 }}</div>
+          <div>{{ site.hero_caption_2 }}</div>
+          <div class="text-gray-600 mt-1">{{ site.hero_caption_3 }}</div>
+        </div>
+      </div>
+
+      <div>
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-6">
+          {{ site.hero_headline|lined }}
+        </h1>
+
+        <p class="text-lg lg:text-xl text-frost/80 max-w-xl leading-relaxed mb-3">
+          {{ site.hero_tagline }}
+        </p>
+        <p class="text-base text-gray-400 max-w-xl leading-relaxed mb-10">
+          {{ site.hero_body }}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="{% url 'services' %}"
+             class="inline-flex items-center justify-center gap-2 px-7 py-3 border border-white/20 hover:border-frost text-white hover:text-frost rounded-full text-sm font-bold tracking-wider transition-all">
+            VIEW SERVICES
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M7 17 L17 7 M11 7 L17 7 L17 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </a>
+          <a href="{% url 'contact' %}"
+             class="inline-flex items-center justify-center gap-2 px-7 py-3 bg-frost hover:bg-frost-bright text-black rounded-full text-sm font-bold tracking-wider transition-all">
+            START YOUR PROJECT
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M7 17 L17 7 M11 7 L17 7 L17 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-ink py-16 lg:py-20">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="flex items-center gap-3 mb-10">
+      <span class="text-frost text-xs tracking-[0.3em] font-bold">{{ site.capabilities_label }}</span>
+      <div class="flex-1 h-px bg-hair"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for card in capabilities %}
+        {% include "partials/capability_card.html" with card=card %}
+      {% empty %}
+        <p class="text-gray-500 text-sm">Cards will appear here once they are added in the editor.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

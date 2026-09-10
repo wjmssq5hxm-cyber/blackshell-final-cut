@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="combg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1017" />
+      <stop offset="100%" stop-color="#1b2330" />
+    </linearGradient>
+    <filter id="comglow"><feGaussianBlur stdDeviation="1.2" /></filter>
+  </defs>
+  <rect width="200" height="200" fill="url(#combg)" />
+
+  <!-- Oscilloscope grid (faint) -->
+  <g stroke="#93b8ce" stroke-width="0.3" opacity="0.18">
+    <line x1="0" y1="50" x2="200" y2="50" />
+    <line x1="0" y1="100" x2="200" y2="100" />
+    <line x1="0" y1="150" x2="200" y2="150" />
+    <line x1="50" y1="0" x2="50" y2="200" />
+    <line x1="100" y1="0" x2="100" y2="200" />
+    <line x1="150" y1="0" x2="150" y2="200" />
+  </g>
+
+  <!-- Center axis (slightly brighter) -->
+  <line x1="0" y1="100" x2="200" y2="100" stroke="#93b8ce" stroke-width="0.4" opacity="0.4" />
+
+  <!-- Square-pulse verification trace -->
+  <g filter="url(#comglow)">
+    <path d="M0 100 L25 100 L25 60 L65 60 L65 100 L90 100 L90 140 L115 140 L115 100 L155 100 L155 60 L185 60 L185 100 L200 100"
+          stroke="#93b8ce" stroke-width="1.5" fill="none" opacity="0.9" />
+  </g>
+
+  <!-- Verification tick markers at transitions -->
+  <g fill="#c3dcea" filter="url(#comglow)">
+    <circle cx="25" cy="60" r="2" />
+    <circle cx="65" cy="60" r="2" />
+    <circle cx="155" cy="60" r="2" />
+    <circle cx="185" cy="60" r="2" />
+  </g>
+
+  <!-- "Pass" check indicator (top right) -->
+  <g stroke="#93b8ce" stroke-width="1" fill="none" filter="url(#comglow)">
+    <circle cx="175" cy="25" r="10" />
+    <path d="M170 25 L174 29 L181 21" />
+  </g>
+</svg>

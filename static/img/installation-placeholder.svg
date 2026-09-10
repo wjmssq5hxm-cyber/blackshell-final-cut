@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="instbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1017" />
+      <stop offset="100%" stop-color="#1b2330" />
+    </linearGradient>
+    <filter id="instglow"><feGaussianBlur stdDeviation="1" /></filter>
+  </defs>
+  <rect width="200" height="200" fill="url(#instbg)" />
+
+  <!-- Bottom block (foundation) -->
+  <g stroke="#93b8ce" stroke-width="1" fill="none" filter="url(#instglow)" opacity="0.85">
+    <!-- Top face -->
+    <polygon points="60,150 100,170 140,150 100,130" />
+    <!-- Left face -->
+    <polygon points="60,150 60,165 100,185 100,170" opacity="0.7" />
+    <!-- Right face -->
+    <polygon points="140,150 140,165 100,185 100,170" opacity="0.5" />
+  </g>
+
+  <!-- Middle block (in place) -->
+  <g stroke="#93b8ce" stroke-width="1" fill="none" filter="url(#instglow)" opacity="0.85">
+    <polygon points="70,120 100,135 130,120 100,105" />
+    <polygon points="70,120 70,130 100,145 100,135" opacity="0.7" />
+    <polygon points="130,120 130,130 100,145 100,135" opacity="0.5" />
+  </g>
+
+  <!-- Top block (descending, brighter cyan to signal "in motion") -->
+  <g stroke="#c3dcea" stroke-width="1.2" fill="none" filter="url(#instglow)">
+    <polygon points="78,75 100,85 122,75 100,65" />
+    <polygon points="78,75 78,82 100,92 100,85" opacity="0.8" />
+    <polygon points="122,75 122,82 100,92 100,85" opacity="0.6" />
+  </g>
+
+  <!-- Dotted guide rails (descent path) -->
+  <g stroke="#93b8ce" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.5">
+    <line x1="78" y1="92" x2="78" y2="130" />
+    <line x1="122" y1="92" x2="122" y2="130" />
+  </g>
+
+  <!-- Hook / lifting point above -->
+  <g stroke="#93b8ce" stroke-width="0.6" opacity="0.6" fill="none">
+    <line x1="100" y1="20" x2="100" y2="50" />
+    <circle cx="100" cy="55" r="4" />
+  </g>
+</svg>

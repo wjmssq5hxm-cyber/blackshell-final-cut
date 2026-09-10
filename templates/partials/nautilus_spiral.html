@@ -1,0 +1,106 @@
+{% load spiral_tags %}
+{% nautilus_hero as hero %}
+{% golden_logo as gold %}
+<div class="relative w-full h-full flex items-center justify-center animate-pulse-glow">
+  <svg viewBox="0 0 600 600" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="frost-glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <linearGradient id="spiralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c3dcea" />
+        <stop offset="50%" stop-color="#93b8ce" />
+        <stop offset="100%" stop-color="#3f5a6b" />
+      </linearGradient>
+      <radialGradient id="centerGlow" cx="50%" cy="50%" r="40%">
+        <stop offset="0%" stop-color="#c08a4e" stop-opacity="0.55" />
+        <stop offset="40%" stop-color="#6e4a22" stop-opacity="0.18" />
+        <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    {# Ember wash behind everything #}
+    <circle cx="300" cy="300" r="280" fill="url(#centerGlow)" />
+
+    {# Compass bezel — quiet wayfinder, from the norse pass #}
+    <circle cx="300" cy="300" r="270" fill="none" stroke="#2b3646" stroke-width="1" opacity="0.6" />
+    <circle cx="300" cy="300" r="264" fill="none" stroke="#93b8ce" stroke-width="2"
+            stroke-dasharray="1.5 20" opacity="0.3" />
+
+    {# Logo blueprint: golden rectangle + Fibonacci squares. Stays put. #}
+    <g class="logo-blueprint" opacity="0.55">
+      <rect x="{{ gold.rect.x }}" y="{{ gold.rect.y }}" width="{{ gold.rect.w }}" height="{{ gold.rect.h }}"
+            fill="none" stroke="#93b8ce" stroke-width="0.6" opacity="0.35" />
+      {% for sq in gold.squares %}
+        <rect x="{{ sq.x }}" y="{{ sq.y }}" width="{{ sq.s }}" height="{{ sq.s }}"
+              fill="none" stroke="#93b8ce" stroke-width="0.7" opacity="0.45" />
+      {% endfor %}
+      {% for arc in gold.arcs %}
+        <path class="logo-arc" d="{{ arc }}" fill="none" stroke="#c3dcea" stroke-width="1.6"
+              stroke-linecap="round" opacity="0.7" />
+      {% endfor %}
+    </g>
+
+    {# Living nautilus — the existing spin #}
+    <g class="animate-spiral" style="transform-origin: 300px 300px">
+      {% for chamber in hero.chambers %}
+        <path d="{{ chamber.d }}" fill="none" stroke="#93b8ce" stroke-width="1.2"
+              opacity="{{ chamber.opacity }}" filter="url(#frost-glow)" />
+      {% endfor %}
+      <path d="{{ hero.spiral_path }}" fill="none" stroke="url(#spiralGradient)"
+            stroke-width="2.5" stroke-linecap="round" filter="url(#frost-glow)" />
+      <path d="{{ hero.spiral_path }}" fill="none" stroke="#c3dcea" stroke-width="1"
+            stroke-linecap="round" opacity="0.55"
+            transform="scale(0.92) translate({{ hero.echo_offset }} {{ hero.echo_offset }})" />
+    </g>
+
+    {# Glyph ring: θ φ √5 9 orbit slowly, each glyph counter-rotates so it stays upright #}
+    <g class="animate-orbit" style="transform-origin: 300px 300px">
+      {% for g in gold.ring %}
+        <g transform="translate({{ g.x }} {{ g.y }})">
+          <g class="animate-unspin">
+            <text text-anchor="middle" dominant-baseline="middle"
+                  fill="#93b8ce" font-size="13" font-family="Geist Mono, ui-monospace, monospace"
+                  opacity="0.55">{{ g.char }}</text>
+          </g>
+        </g>
+      {% endfor %}
+    </g>
+
+    {# Logo-locked marks: θ in the large chamber, 9 on the outer arc — they breathe, they don't spin #}
+    {% for g in gold.glyphs %}
+      <text class="glyph-float" style="animation-delay: {{ g.delay }}"
+            x="{{ g.x }}" y="{{ g.y }}" text-anchor="middle" dominant-baseline="middle"
+            fill="#c3dcea" font-size="{{ g.size }}" font-family="Georgia, 'Times New Roman', serif"
+            opacity="0.9" filter="url(#frost-glow)">{{ g.char }}</text>
+    {% endfor %}
+
+    {# The formula plate from the logo, sitting in the remaining rectangle #}
+    <g transform="translate({{ gold.formula.x }} {{ gold.formula.y }})">
+      <g class="glyph-float" style="animation-delay: 0.6s">
+        <text x="-20" y="2" text-anchor="end" fill="#c3dcea" font-size="18"
+              font-family="Georgia, 'Times New Roman', serif" opacity="0.95">φ =</text>
+        <text x="16" y="-8" text-anchor="middle" fill="#c3dcea" font-size="14"
+              font-family="Georgia, 'Times New Roman', serif" opacity="0.95">√5</text>
+        <line x1="2" y1="2" x2="30" y2="2" stroke="#c3dcea" stroke-width="1.2" opacity="0.9" />
+        <text x="16" y="18" text-anchor="middle" fill="#c3dcea" font-size="14"
+              font-family="Georgia, 'Times New Roman', serif" opacity="0.95">2</text>
+      </g>
+    </g>
+
+    {# Nested plus at the Fibonacci core — the logo's innermost mark, lit bronze #}
+    <g transform="translate({{ gold.plus.cx }} {{ gold.plus.cy }})" filter="url(#frost-glow)">
+      <line x1="-{{ gold.plus.arm }}" y1="0" x2="{{ gold.plus.arm }}" y2="0" stroke="#c08a4e" stroke-width="1.6" />
+      <line x1="0" y1="-{{ gold.plus.arm }}" x2="0" y2="{{ gold.plus.arm }}" stroke="#c08a4e" stroke-width="1.6" />
+      <circle r="2.2" fill="#c08a4e" />
+      <circle r="0.9" fill="#ffffff" />
+    </g>
+
+    <circle cx="{{ hero.end_x }}" cy="{{ hero.end_y }}" r="6" fill="#93b8ce" opacity="0.4" filter="url(#frost-glow)" />
+    <circle cx="{{ hero.end_x }}" cy="{{ hero.end_y }}" r="2.5" fill="#ffffff" />
+  </svg>
+</div>

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load spiral_tags %}
+
+{% block title %}Contact | {{ site.company_name }}{% endblock %}
+{% block description %}{{ site.contact_intro }}{% endblock %}
+{% block og_title %}Contact | {{ site.company_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+  <div class="flex items-center gap-3 mb-12">
+    <span class="text-frost text-xs tracking-[0.3em] font-bold">{{ site.contact_eyebrow }}</span>
+    <div class="flex-1 h-px bg-hair"></div>
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == 'success' %}
+        <div class="max-w-2xl mb-12">
+          <div class="border border-frost/30 bg-frost/5 rounded-2xl p-10 text-center">
+            <h2 class="text-2xl font-bold text-frost mb-3">{{ message }}</h2>
+            <p class="text-gray-300">{{ site.contact_success_body }}</p>
+          </div>
+        </div>
+      {% else %}
+        <div class="max-w-2xl mb-8 rounded-xl border border-red-500/30 bg-red-500/5 px-4 py-3 text-sm text-red-400">
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <div class="lg:col-span-5">
+      <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-[0.95] text-white mb-6">
+        {{ site.contact_headline|lined }}
+      </h1>
+      <p class="text-gray-400 max-w-md mb-10">
+        {{ site.contact_intro }}
+      </p>
+
+      <div class="space-y-6 border-t border-hair pt-8">
+        <div>
+          <div class="text-[10px] text-frost tracking-[0.3em] font-bold mb-2">PHONE</div>
+          <a href="{{ site.phone_href }}" class="text-sm text-gray-300 font-mono hover:text-frost">{{ site.phone }}</a>
+        </div>
+        <div>
+          <div class="text-[10px] text-frost tracking-[0.3em] font-bold mb-2">EMAIL</div>
+          <a href="mailto:{{ site.email }}" class="text-sm text-gray-300 font-mono hover:text-frost">{{ site.email }}</a>
+        </div>
+        <div>
+          <div class="text-[10px] text-frost tracking-[0.3em] font-bold mb-2">SERVICE AREA</div>
+          <p class="text-sm text-gray-300">{{ site.service_area }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-7">
+      <form method="post" class="space-y-5">
+        {% csrf_token %}
+        {{ form.website }}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label for="{{ form.name.id_for_label }}" class="block text-[10px] text-frost tracking-[0.3em] font-bold mb-2">NAME *</label>
+            {{ form.name }}
+            {% for error in form.name.errors %}<p class="text-xs text-red-400 mt-1.5">{{ error }}</p>{% endfor %}
+          </div>
+          <div>
+            <label for="{{ form.company.id_for_label }}" class="block text-[10px] text-frost tracking-[0.3em] font-bold mb-2">COMPANY</label>
+            {{ form.company }}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label for="{{ form.email.id_for_label }}" class="block text-[10px] text-frost tracking-[0.3em] font-bold mb-2">EMAIL *</label>
+            {{ form.email }}
+            {% for error in form.email.errors %}<p class="text-xs text-red-400 mt-1.5">{{ error }}</p>{% endfor %}
+          </div>
+          <div>
+            <label for="{{ form.phone.id_for_label }}" class="block text-[10px] text-frost tracking-[0.3em] font-bold mb-2">PHONE</label>
+            {{ form.phone }}
+          </div>
+        </div>
+
+        <div>
+          <label for="{{ form.scope.id_for_label }}" class="block text-[10px] text-frost tracking-[0.3em] font-bold mb-2">PROJECT SCOPE</label>
+          {{ form.scope }}
+        </div>
+
+        <div>
+          <label for="{{ form.message.id_for_label }}" class="block text-[10px] text-frost tracking-[0.3em] font-bold mb-2">PROJECT DETAILS *</label>
+          {{ form.message }}
+          {% for error in form.message.errors %}<p class="text-xs text-red-400 mt-1.5">{{ error }}</p>{% endfor %}
+        </div>
+
+        <button type="submit"
+                class="inline-flex items-center gap-2 px-7 py-3 bg-frost hover:bg-frost-bright text-black rounded-full text-sm font-bold tracking-wider transition-all">
+          SEND MESSAGE
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M7 17 L17 7 M11 7 L17 7 L17 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <p class="text-[10px] text-gray-500 pt-1">
+          We never share your information. Typical response: same business day.
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+/* Soft restyle of Django admin so it feels like a content desk, not a database. */
+#header {
+  background: #080b10;
+  color: #c3dcea;
+}
+#header a:link, #header a:visited {
+  color: #c3dcea;
+}
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+  color: #c3dcea;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+#user-tools a:focus, #user-tools a:hover {
+  color: #fff;
+}
+.module h2, .module caption, .inline-group h2 {
+  background: #0c1017;
+  color: #93b8ce;
+}
+.editor-welcome {
+  background: #0c1017;
+  color: #e8eef3;
+  border: 1px solid #1b2330;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.editor-welcome h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: #c3dcea;
+}
+.editor-welcome p, .editor-welcome li {
+  color: #c5d0d8;
+  line-height: 1.5;
+}
+.editor-welcome ul {
+  margin: 12px 0;
+}
+.editor-hint {
+  font-size: 0.9rem;
+  color: #93b8ce !important;
+}
+a:link, a:visited {
+  color: #5b7c8d;
+}
+a:hover {
+  color: #93b8ce;
+}
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+  background: #5b7c8d;
+}
+.button.default, input[type=submit].default, .submit-row input.default {
+  background: #93b8ce;
+  color: #080b10;
+}

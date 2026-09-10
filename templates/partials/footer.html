@@ -1,0 +1,45 @@
+{% load static %}
+<footer class="bg-ink border-t border-hair">
+  <div class="bg-ink border-y border-hair py-3 overflow-hidden relative">
+    <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-ink to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-ink to-transparent z-10 pointer-events-none"></div>
+
+    <div class="flex animate-marquee whitespace-nowrap">
+      {% for item in marquee_items %}
+        <span class="text-[11px] text-gray-500 mx-6 tracking-[0.25em] font-mono flex items-center gap-6">
+          <span class="text-frost/40">◆</span>{{ item.text }}
+        </span>
+      {% endfor %}
+      {% for item in marquee_items %}
+        <span class="text-[11px] text-gray-500 mx-6 tracking-[0.25em] font-mono flex items-center gap-6" aria-hidden="true">
+          <span class="text-frost/40">◆</span>{{ item.text }}
+        </span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="max-w-[1400px] mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-12 gap-8">
+    <div class="md:col-span-5">
+      <a href="{% url 'home' %}" class="inline-flex items-center gap-3">
+        <img src="{% static 'img/logo.png' %}" alt="{{ site.company_name }}" width="24" height="24" class="logo-mark w-6 h-6 object-contain" />
+        <span class="text-sm text-frost font-bold tracking-wider">{{ site.company_name|upper }}</span>
+      </a>
+      <p class="text-xs text-gray-500 mt-3 max-w-xs">{{ site.city }}</p>
+    </div>
+    <nav class="md:col-span-4 flex flex-wrap gap-x-5 gap-y-2 content-start" aria-label="Footer">
+      {% for link in nav_links %}
+        <a href="{% url link.url_name %}" class="text-[11px] tracking-wider text-gray-400 hover:text-frost font-semibold">{{ link.label }}</a>
+      {% endfor %}
+    </nav>
+    <div class="md:col-span-3 space-y-2 text-sm">
+      {% if site.phone_href %}
+        <a href="{{ site.phone_href }}" class="block text-gray-300 font-mono hover:text-frost">{{ site.phone }}</a>
+      {% endif %}
+      <a href="mailto:{{ site.email }}" class="block text-gray-300 font-mono hover:text-frost">{{ site.email }}</a>
+    </div>
+  </div>
+
+  <div class="max-w-[1400px] mx-auto px-6 py-6 border-t border-hair">
+    <span class="text-xs text-gray-500 tracking-wider">© {% now "Y" %} {{ site.company_name|upper }} · {{ site.city|upper }}</span>
+  </div>
+</footer>

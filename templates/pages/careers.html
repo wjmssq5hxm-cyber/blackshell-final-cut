@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Careers | {{ site.company_name }}{% endblock %}
+{% block description %}{{ site.careers_intro }}{% endblock %}
+{% block og_title %}Careers | {{ site.company_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24">
+  <div class="flex items-center gap-3 mb-12">
+    <span class="text-frost text-xs tracking-[0.3em] font-bold">{{ site.careers_eyebrow }}</span>
+    <div class="flex-1 h-px bg-hair"></div>
+  </div>
+
+  <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-[0.95] text-white mb-6">
+    {{ site.careers_headline }}
+  </h1>
+  <p class="text-lg text-gray-400 max-w-2xl mb-16">
+    {{ site.careers_intro }}
+  </p>
+
+  <div class="space-y-px">
+    {% for job in openings %}
+      <a href="{% url 'contact' %}"
+         class="group grid grid-cols-1 md:grid-cols-12 gap-6 py-8 border-t border-hair hover:border-frost/30 transition-colors items-center">
+        <div class="md:col-span-6">
+          <h3 class="text-2xl font-bold text-white group-hover:text-frost transition-colors">{{ job.title }}</h3>
+        </div>
+        <div class="md:col-span-3 text-sm text-gray-400">{{ job.location }}</div>
+        <div class="md:col-span-2 text-xs text-frost tracking-[0.2em] font-mono">{{ job.job_type|upper }}</div>
+        <div class="md:col-span-1 md:text-right">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="inline-block text-gray-500 group-hover:text-frost transition-colors">
+            <path d="M7 17 L17 7 M11 7 L17 7 L17 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+      </a>
+    {% empty %}
+      <p class="text-gray-500 py-8 border-t border-hair">No openings posted right now — reach out anyway.</p>
+    {% endfor %}
+  </div>
+
+  <div class="mt-20 border-t border-hair pt-12">
+    <p class="text-sm text-gray-400 max-w-2xl">
+      {{ site.careers_footer }}
+      <a href="{% url 'contact' %}" class="text-frost hover:text-frost-bright underline">Contact us</a>.
+    </p>
+  </div>
+</div>
+{% endblock %}

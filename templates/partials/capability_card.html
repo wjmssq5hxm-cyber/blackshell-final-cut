@@ -1,0 +1,36 @@
+{% load static %}
+<div class="group relative bg-surface border border-hair hover:border-frost/30 rounded-2xl p-6 transition-all overflow-hidden">
+  <div class="absolute top-0 left-0 w-6 h-6 border-l border-t border-frost/0 group-hover:border-frost/60 transition-colors"></div>
+  <div class="absolute bottom-0 right-0 w-6 h-6 border-r border-b border-frost/0 group-hover:border-frost/60 transition-colors"></div>
+
+  <div class="flex flex-col gap-4">
+    <h3 class="text-xl font-black tracking-wider text-white">{{ card.title }}</h3>
+
+    <div class="grid grid-cols-2 gap-4">
+      <ul class="space-y-2">
+        {% for item in card.bullet_list %}
+          <li class="text-xs text-gray-400 flex gap-2 items-start">
+            <span class="text-frost mt-1">▸</span>
+            <span>{{ item }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <div class="relative aspect-square bg-card rounded overflow-hidden border border-hair">
+        {% if card.image %}
+          <img src="{{ card.image.url }}" alt="{{ card.title }}" class="w-full h-full object-cover opacity-80">
+        {% else %}
+          <img src="{% static card.placeholder_static %}" alt="" class="w-full h-full object-cover opacity-80">
+        {% endif %}
+
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <rect x="0" y="0" width="100" height="100" fill="none" stroke="#93b8ce" stroke-width="0.3" opacity="0.4" />
+          <line x1="61.8" y1="0" x2="61.8" y2="100" stroke="#93b8ce" stroke-width="0.3" opacity="0.4" />
+          <line x1="0" y1="38.2" x2="61.8" y2="38.2" stroke="#93b8ce" stroke-width="0.3" opacity="0.4" />
+          <line x1="38.2" y1="38.2" x2="38.2" y2="100" stroke="#93b8ce" stroke-width="0.3" opacity="0.4" />
+          <path d="M 100 100 Q 100 61.8 61.8 61.8" fill="none" stroke="#93b8ce" stroke-width="0.4" opacity="0.5" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
