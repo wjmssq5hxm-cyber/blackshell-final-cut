@@ -26,11 +26,11 @@
         <div class="relative aspect-[16/10] bg-card overflow-hidden">
           {% if project.cover_image %}
             <img src="{{ project.cover_image.url }}" alt="{{ project.title }}"
-                 class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-500">
+                 class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-500"
+                 onerror="this.onerror=null;this.src='{% static project.stock_fallback %}';">
           {% else %}
-            <div class="w-full h-full flex items-center justify-center bg-grid">
-              {% include "partials/nautilus_icon.html" with size=48 %}
-            </div>
+            <img src="{% static project.stock_fallback %}" alt="{{ project.title }}"
+                 class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-500">
           {% endif %}
           {% if project.scope %}
             <span class="absolute top-4 left-4 text-[10px] tracking-[0.25em] font-mono text-frost bg-ink/80 px-3 py-1 rounded-full">

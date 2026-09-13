@@ -108,10 +108,19 @@ class PageTests(TestCase):
         build = Capability(title="BUILD", bullets="x")
         service = Capability(title="SERVICE", bullets="x")
         other = Capability(title="OTHER", bullets="x")
-        self.assertEqual(design.placeholder_static, "img/engineering-placeholder.svg")
-        self.assertEqual(build.placeholder_static, "img/installation-placeholder.svg")
-        self.assertEqual(service.placeholder_static, "img/commissioning-placeholder.svg")
-        self.assertEqual(other.placeholder_static, "img/engineering-placeholder.svg")
+        self.assertEqual(design.placeholder_static, "img/stock/design.jpg")
+        self.assertEqual(build.placeholder_static, "img/stock/build.jpg")
+        self.assertEqual(service.placeholder_static, "img/stock/service.jpg")
+        self.assertEqual(other.placeholder_static, "img/stock/design.jpg")
+
+    def test_project_stock_fallback(self):
+        project = Project(
+            client="TEST",
+            title="Plant Power Upgrade",
+            slug="plant-power-upgrade",
+            blurb="x",
+        )
+        self.assertEqual(project.stock_fallback, "img/stock/plant-power.jpg")
 
     def test_phone_href_strips_formatting(self):
         site = SiteSettings.load()

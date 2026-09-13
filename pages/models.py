@@ -272,10 +272,10 @@ class Capability(OrderedModel):
     def placeholder_static(self):
         key = (self.title or "").strip().upper()
         return {
-            "DESIGN": "img/engineering-placeholder.svg",
-            "BUILD": "img/installation-placeholder.svg",
-            "SERVICE": "img/commissioning-placeholder.svg",
-        }.get(key, "img/engineering-placeholder.svg")
+            "DESIGN": "img/stock/design.jpg",
+            "BUILD": "img/stock/build.jpg",
+            "SERVICE": "img/stock/service.jpg",
+        }.get(key, "img/stock/design.jpg")
 
 
 class Service(OrderedModel):
@@ -408,6 +408,31 @@ class Project(OrderedModel):
         if not self.slug:
             self.slug = slugify(self.title)[:50]
         super().save(*args, **kwargs)
+
+    @property
+    def stock_fallback(self):
+        """Static stock photo when media storage lost the cover file."""
+        slug = (self.slug or "").strip().lower()
+        by_slug = {
+            "plant-power-upgrade": "img/stock/plant-power.jpg",
+            "multi-site-rollout": "img/stock/retail-rollout.jpg",
+            "tenant-build-out-bas": "img/stock/tenant-buildout.jpg",
+            "campus-fiber-backbone": "img/stock/campus-fiber.jpg",
+        }
+        if slug in by_slug:
+            return by_slug[slug]
+        name = ""
+        try:
+            name = (self.cover_image.name or "").rsplit("/", 1)[-1].lower()
+        except Exception:
+            name = ""
+        by_name = {
+            "plant-power.jpg": "img/stock/plant-power.jpg",
+            "retail-rollout.jpg": "img/stock/retail-rollout.jpg",
+            "tenant-buildout.jpg": "img/stock/tenant-buildout.jpg",
+            "campus-fiber.jpg": "img/stock/campus-fiber.jpg",
+        }
+        return by_name.get(name, "img/stock/design.jpg")
 
     def get_absolute_url(self):
         return reverse("project_detail", args=[self.slug])

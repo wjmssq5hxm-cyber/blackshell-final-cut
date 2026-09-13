@@ -17,11 +17,10 @@
       </ul>
 
       <div class="relative aspect-square bg-card rounded overflow-hidden border border-hair">
-        {% if card.image %}
-          <img src="{{ card.image.url }}" alt="{{ card.title }}" class="w-full h-full object-cover opacity-80">
-        {% else %}
-          <img src="{% static card.placeholder_static %}" alt="" class="w-full h-full object-cover opacity-80">
-        {% endif %}
+        <img src="{% if card.image %}{{ card.image.url }}{% else %}{% static card.placeholder_static %}{% endif %}"
+             alt="{{ card.title }}"
+             class="w-full h-full object-cover opacity-80"
+             onerror="this.onerror=null;this.src='{% static card.placeholder_static %}';">
 
         <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
           <rect x="0" y="0" width="100" height="100" fill="none" stroke="#93b8ce" stroke-width="0.3" opacity="0.4" />
