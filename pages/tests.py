@@ -2,7 +2,9 @@
 
 from unittest.mock import patch
 
+from django.contrib.auth import get_user_model
 from django.core import mail
+from django.core.management import call_command
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
@@ -126,6 +128,23 @@ class PageTests(TestCase):
         site = SiteSettings.load()
         site.phone = "+1 (312) 555-0142"
         self.assertEqual(site.phone_href, "tel:+13125550142")
+
+    def test_seed_syncs_existing_editor_password(self):
+        User = get_user_model()
+        user = User.objects.create_superuser("editor", "a@b.c", "old-password")
+        buf = __import__("io").StringIO()
+        with override_settings(DEBUG=False):
+            call_command("seed_site", stdout=buf)
+        user.refresh_from_db()
+        self.assertTrue(user.check_password("old-password"))
+        with patch.dict("os.environ", {"EDITOR_PASSWORD": "new-from-env"}):
+            with override_settings(DEBUG=False):
+                call_command("seed_site", stdout=__import__("io").StringIO())
+        user.refresh_from_db()
+        self.assertTrue(user.check_password("new-from-env"))
+        self.assertTrue(user.is_staff)
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_active)
 
 
 @override_settings(**TEST_SETTINGS)

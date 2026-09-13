@@ -338,8 +338,9 @@ class Command(BaseCommand):
             self.stdout.write(f"Attached {attached} stock photos.")
 
         User = get_user_model()
-        if not User.objects.filter(username="editor").exists():
-            password = os.getenv("EDITOR_PASSWORD", "")
+        password = os.getenv("EDITOR_PASSWORD", "")
+        editor = User.objects.filter(username="editor").first()
+        if editor is None:
             if not password:
                 if settings.DEBUG:
                     password = "blackshell"
@@ -375,7 +376,18 @@ class Command(BaseCommand):
                     self.style.SUCCESS("Editor login created — username: editor")
                 )
         else:
-            self.stdout.write("Editor login already exists.")
+            editor.is_staff = True
+            editor.is_superuser = True
+            editor.is_active = True
+            if password:
+                editor.set_password(password)
+                editor.save()
+                self.stdout.write(
+                    "Editor login password synced from EDITOR_PASSWORD"
+                )
+            else:
+                editor.save()
+                self.stdout.write("Editor login already exists.")
 
         self.stdout.write(self.style.SUCCESS("Starter content is in place."))
         self.stdout.write("Open /editor/ to change any of it.")
