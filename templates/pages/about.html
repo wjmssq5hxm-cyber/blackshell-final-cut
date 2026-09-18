@@ -16,27 +16,10 @@
     {{ site.about_headline|lined }}
   </h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
-    <div class="md:col-span-7">
-      <p class="text-lg text-gray-300 leading-relaxed mb-6">{{ site.about_p1 }}</p>
-      <p class="text-base text-gray-400 leading-relaxed mb-6">{{ site.about_p2 }}</p>
-      <p class="text-base text-gray-400 leading-relaxed">{{ site.about_p3 }}</p>
-    </div>
-
-    <div class="md:col-span-5 space-y-6">
-      <div class="border-l border-frost/40 pl-6">
-        <div class="text-[10px] text-frost tracking-[0.3em] font-bold mb-2">EST.</div>
-        <div class="text-3xl font-black text-white">{{ site.founded_year }}</div>
-      </div>
-      <div class="border-l border-frost/40 pl-6">
-        <div class="text-[10px] text-frost tracking-[0.3em] font-bold mb-2">LICENSED</div>
-        <div class="text-3xl font-black text-white">{{ site.licensed_states }}</div>
-      </div>
-      <div class="border-l border-frost/40 pl-6">
-        <div class="text-[10px] text-frost tracking-[0.3em] font-bold mb-2">{{ site.license_label }}</div>
-        <div class="text-3xl font-black text-white font-mono">{{ site.license_number }}</div>
-      </div>
-    </div>
+  <div class="max-w-3xl mb-20">
+    <p class="text-lg text-gray-300 leading-relaxed mb-6">{{ site.about_p1 }}</p>
+    <p class="text-base text-gray-400 leading-relaxed mb-6">{{ site.about_p2 }}</p>
+    <p class="text-base text-gray-400 leading-relaxed">{{ site.about_p3 }}</p>
   </div>
 
   <div class="border-t border-hair pt-12">
