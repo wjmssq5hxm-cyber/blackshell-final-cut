@@ -68,6 +68,21 @@ class PageTests(TestCase):
         response = self.client.get(reverse("project_detail", args=["campus-fiber"]))
         self.assertEqual(response.status_code, 404)
 
+    def test_projects_nav_hidden_when_unpublished(self):
+        Project.objects.update(is_published=False)
+        response = self.client.get("/")
+        self.assertNotContains(response, 'href="/projects/"')
+        self.assertEqual(self.client.get(reverse("projects")).status_code, 200)
+
+    def test_projects_nav_shown_when_published(self):
+        response = self.client.get("/")
+        self.assertContains(response, 'href="/projects/"')
+
+    def test_about_has_logo_mark(self):
+        response = self.client.get(reverse("about"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'viewBox="0 0 600 600"')
+
     def test_unknown_url_returns_custom_404(self):
         response = self.client.get("/does-not-exist/")
         self.assertEqual(response.status_code, 404)

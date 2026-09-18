@@ -310,7 +310,7 @@ class Command(BaseCommand):
 
         if not Project.objects.exists():
             for i, row in enumerate(PROJECTS):
-                Project.objects.create(order=i, is_published=True, **row)
+                Project.objects.create(order=i, is_published=False, **row)
 
         if not Post.objects.exists():
             from datetime import date
